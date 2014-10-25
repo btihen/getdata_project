@@ -187,4 +187,4 @@ all_means_std <- all_data[ report_columns ]
 ##########################################
 #all_means_std <- all_means_std[ order(subject_id, activity) ]
 means_stddevs <- all_means_std[ c(2,1,3:length(report_columns) )]
-write.table( means_stddevs, file="all_means_stddev.txt", row.name=FALSE, sep="," )
+write.table( means_stddevs, file="all_means_stddev.csv", row.name=FALSE, sep="," )
