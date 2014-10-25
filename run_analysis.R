@@ -95,11 +95,16 @@ train_measures   = read.table( train_measures_file, header=FALSE, strip.white=TR
 ## TIDY THE DATA SETS 
 ##
 ## create a data set that follows the tidy data rules -- so that the data can be analyzed and understood
-## 1) one row for each observation
-## 2) data is clearly labeled & meaningful (thus usable)
-## 3) remove improper data (out of range & possibly incomplete cases)
+## A) one row for each observation
+## B) data is clearly labeled & meaningful (thus usable)
+## C) remove improper data (out of range & possibly incomplete cases)
 #################################
 
+######################################
+######################################
+## ANSWER 4) label the data values ##
+######################################
+######################################
 # Add proper labels to data frame values
 colnames(activity_labels)[1] <- "activity_id"
 colnames(activity_labels)[2] <- "activity"
@@ -121,24 +126,8 @@ colnames(test_subject_df)[1] <- "subject_id"
 # create labels for the test activity df
 test_activity_df <- data.frame(test_activities)
 colnames(test_activity_df)[1] <- "activity_id"
-
-#######################################################
-## Join the test data values into a single dataframe ##
-#######################################################
-# combine subject and activity dfs
-test_df <- cbind(test_subject_df, test_activity_df)
-# merge in activity labels (do not create every condition)
-test_df <- merge(test_df, activity_labels, by="activity_id", all=FALSE)
-# sort it into the the same order as the original data -- by subject id
-test_df <- test_df[ order( test_df$subject_id ), ]
-# re-order the data fram with subject_id first and activity_label last
-test_df <- test_df[c(2,1,3)]
-# add in the measturement data
-test_df <- cbind(test_df, test_measures)
-
-
 ################################
-## label the train data values ##
+## label the train  data values ##
 ################################
 # label each of the train measurement columns
 for ( i in 1:nrow(measurement_labels) ) {
@@ -151,21 +140,32 @@ colnames(train_subject_df)[1] <- "subject_id"
 train_activity_df <- data.frame(train_activities)
 colnames(train_activity_df)[1] <- "activity_id"
 
-#######################################################
-## Join the train data values into a single dataframe ##
-#######################################################
+
+#########################################
+#########################################
+## ANSWER: 1) join the TEST and TRAIN datasets ##
+#########################################
+#########################################
 # combine subject and activity dfs
-train_df <- cbind(train_subject_df, train_activity_df)
+test_df <- cbind(test_subject_df, test_activity_df, test_measures)
+# combine subject and activity dfs
+train_df <- cbind(train_subject_df, train_activity_df, train_measures)
+# combine all rows into one big data frame
+all_data <- rbind( test_df, train_df )
+
+
+######################################
+######################################
+## ANSWER 3) human readble activity ##
+######################################
+######################################
 # merge in activity labels (do not create every condition)
-train_df <- merge(train_df, activity_labels, by="activity_id", all=FALSE)
-# sort it into the the same order as the original data -- by subject id
-train_df <- train_df[ order( train_df$subject_id ), ]
-# re-order the data fram with subject_id first and activity_label last
-train_df <- train_df[c(2,1,3)]
-# add in the measturement data
-train_df <- cbind(train_df, train_measures)
+all_data <- merge(activity_labels,all_data, by="activity_id", all=FALSE)
+
+####################
+## sort the data? ##
+####################
+# sort it into a nice order by: subject_id and then activity_id
+all_data <- all_data[ order( all_data$subject_id, all_data$activity_id ), ]
 
 
-##############################################
-## 1) join the tidy TEST and TRAIN datasets ##
-##############################################
