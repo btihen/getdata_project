@@ -168,14 +168,23 @@ all_data <- merge(activity_labels,all_data, by="activity_id", all=FALSE)
 # sort it into a nice order by: subject_id and then activity_id
 all_data <- all_data[ order( all_data$subject_id, all_data$activity_id ), ]
 
-####
-####
-## get means and stdev
-#####
-#####
+########################################################
+########################################################
+## ANSWER 2) get means and stdev for each measurement ##
+########################################################
+########################################################
 all_data_names <- colnames(all_data)
 colnames(all_data_names)[1] <- "col_names"
 pattern = "mean|std|subject_id|activity$"
 all_data_names$keep <- grepl( pattern, all_data_names$col_names, ignore.case=TRUE )
 report_columns = which( all_data_names$keep )
 all_means_std <- all_data[ report_columns ]
+
+##########################################
+##########################################
+## ANSWER 5) Report data as a text file ##
+##########################################
+##########################################
+#all_means_std <- all_means_std[ order(subject_id, activity) ]
+means_stddevs <- all_means_std[ c(2,1,3:length(report_columns) )]
+write.table( means_stddevs, file="all_means_stddev.txt", row.name=FALSE, sep="," )
