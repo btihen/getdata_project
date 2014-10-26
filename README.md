@@ -14,10 +14,10 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
 ## REQUIREMENTS
 
-* r   -- data analysis software (http://www.r-project.org/)
-* git -- source control software (http://git-scm.com/downloads)
-* access to git hub
-* access to the command line interface
+* **r**   -- data analysis software (http://www.r-project.org/ downloads at: http://cran.r-project.org/)
+* **git** -- source control software (http://git-scm.com/ downloads at: http://git-scm.com/downloads)
+* access to **github** -- a webbased git repository (https://github.com/btihen/getdata_project)
+* access to the **command line interface**
 
 
 ## USAGE
@@ -41,6 +41,11 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
   this is in a CSV format and uses a TXT extension to ensure compatibility with coursera's website (to upload this file)
 
 ## CODE LOGIC
+
+
+## DATA EXPLAINED
+
+see the codebook: 
 
 
 
