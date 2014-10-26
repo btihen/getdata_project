@@ -83,6 +83,7 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
   
      `|`
 
+
      `-> tidydata`    _(top level for all tidy data)_
 
      `|  |`
@@ -91,13 +92,13 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
      `|`
 
-     `-> rawdata`     _(top level for all raw data)_
+     `-> rawdata`   _(top level for all raw data)_
 
-        `|` 
+       `|`
 
         `-> har-rawdata.zip` _(location of the downloaded raw data file -- still in zipped format)_
 
-        `|` 
+       `|`
 
         `-> unzipped`  _(location for the unzipped raw data files)_
 
@@ -125,7 +126,8 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
 * read the **TRAINING** data -- the same as the test data (except **test** is replaced with **train**)
 
-**REQUIREMENT 4 -- ensure each variable is labeled in the final summary data frame**
+**REQUIREMENT 4** -- ensure each variable is labeled in the final summary data frame
+
 Doing this at the start for each data frame to make it hard to make mistakes -- normally one prefers to read in data with headers -- doing this at the start simulates this.
 
 * the measurement labels come from the features.txt file 
