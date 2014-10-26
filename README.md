@@ -57,9 +57,7 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
   website (to upload this file)
 
 
-## CODE LOGIC
-
-**PROJECT STRUCTURE**
+## PROJECT STRUCTURE
 
   `getdata_project`   _(seen in the code as `.`)_
 
@@ -99,6 +97,9 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
         `-> unzipped`  _(location for the unzipped raw data files)_
 
+
+## CODE LOGIC
+
 **PREPARATION** 
 * define the data url
 * Create the directory structures  
@@ -122,6 +123,11 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
   **NOTE:** these files are not indexed -- the order is very important in order to align the subject_id, observed subject activity and associated phone measurements
 
+**TIDY THE DATA -- the assignment**
+
+**CHECK THAT ALL DATA IS WITHIN BOUNDS AND VALID**
+
+I did this manually and found no errors or invalid data, so I didn't include any code to address this.
 
 **REQUIREMENT 4** -- ensure each variable is labeled in the final summary data frame
 
