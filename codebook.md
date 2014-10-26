@@ -1,8 +1,15 @@
-# Codebook for getdata_project
+# DATA DESCRIPTION
 
-An explanation of the raw data, summary data, valid measurements and variable units -- take from the raw data **README.txt**
+**A Codebook for getdata_project**
 
-**SETUP**
+## OVERVIEW
+
+This is a complex data set with raw data and processed information.  The following is an explanation of the raw data, summary data, valid measurements and variable units.
+
+I have done my best to collect and organize the information contained in the data's **README.txt** and **features_info.txt** into a single coehesive document.
+
+
+## DATA INCLUDED
 
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
 - Triaxial Angular velocity from the gyroscope. 
@@ -11,18 +18,9 @@ An explanation of the raw data, summary data, valid measurements and variable un
 - An identifier of the subject who carried out the experiment.
 
 
-DATA DESCRIPTION
-================
+## Summary DATA Produced 
 
-##OVERVIEW
-
-This is a complex data set with raw data and processed information.
-
-I have done my best to collect and organize the information contained in the data's README.txt and features_info.txt into a single coehesive document
-
-## Data Described in Summary data
-
-This includes:
+This project's code: **run_analysis.R** -- produces the file **har-tidydata-summary.txt** -- which includes data:
 
 * **subjects** -- a group of 30 volunteers within an age bracket of 19-48 years. **Its range is from 1 to 30.**
 * **activities** -- each subject performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) while wearing a smartphone on the waist.   The experiments have been video-recorded to label the observed activities manually. **Its range is from 1 to 6.**
@@ -30,12 +28,14 @@ This includes:
 
 **NOTE** -- I manually checked that all data was within bounds -- not with code.
 
-## RAW DATA
+
+## RAW DOWNLOADE DATA DESCRIPTION
+
 There are TWO basic type of measurements -- each measured along 3 axis (XYZ)
 * **Acceleration (Acc)** - in units of gravity 'g' 
 * **Gryoscopic (Gryo)** -- in units of radians/sec
 
-## FEATURES (Calculated info)
+## FEATURES (Calculated info) DESCRIPTION
 
 There are many (561 features), however, there are serveral type of calcalations (often merged into a single value), so I am including only ability to identify these they include: 
 
@@ -51,10 +51,10 @@ There are many (561 features), however, there are serveral type of calcalations 
 * **Jerk** -- derived in time to obtain Jerk signals -- this calculation is unclearn and I cannot find more information
 * **Magnitude** -- magnitude of these three-dimensional signals were calculated using the Euclidean norm
 
-**Notes** -- Features are normalized and bounded within [-1,1].
+**Notes** -- All features are normalized and bounded within [-1,1].
 
 
-## PROCESSING
+## DOWNLOADED DATA PROCESSING
 
 **RAW DATA**
 
@@ -72,7 +72,7 @@ These signals were used to estimate variables of the feature vector for each pat
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
 
-## DATA SETS
+## DATA SETS -- TEST and TRAINING
 
 The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 
