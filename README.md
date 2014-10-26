@@ -64,23 +64,41 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 * define the project file and directory structures
 
   `getdata_project`   (seen in the code as `.`)
+  
   `|`
+  
   `-> README.md`      (the location of this file -- describing the project and the code`
+  
   `|` 
+  
   `-> codebook.md`    (the location of the description of the data)
+  
   `|`
+  
   `-> run_analysis.R` (the location of the code being described in this section)
+  
   `|`
+  
   `-> data`           (top level for all data files)
+  
      `|`
+     
      `-> tidydata`    (top level for all tidy data)
+     
      `|  |`
+     
      `|  -> har-tidydata-summary.txt  (location of required summary file)`
+     
      `|`
+     
      `-> rawdata`     (top level for all raw data)
+     
         `|` 
+        
         `-> har-rawdata.zip` (location of the downloaded raw data file -- still in zipped format)
+        
         `|` 
+        
         `-> unzipped` (location for the unzipped raw data files)
 
 * create the directory structures  
@@ -107,62 +125,70 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
 * read the **TRAINING** data -- the same as the test data (except **test** is replaced with **train**)
 
-**TIDY THE DATA** -- requirement 4
-* Start by labeling all the variable in each data frame 
-  * the measurement labels come from the features.txt file 
+**REQUIREMENT 4 -- ensure each variable is labeled in the final summary data frame**
+Doing this at the start for each data frame to make it hard to make mistakes -- normally one prefers to read in data with headers -- doing this at the start simulates this.
+
+* the measurement labels come from the features.txt file 
 
   (used a for loop to take the feature labels and add it to the measurement_df$Name)
 
-  * subject data is converted to a data frame and named subject_id
-  * activity data is converted to a data frame and named acitivity_id
-  * MERGE THE subject, activity and measurement data frames for both test and training data
-    this is straightforward using cbind: 
+* subject data is converted to a data frame and named subject_id
+* activity data is converted to a data frame and named acitivity_id
+* MERGE THE subject, activity and measurement data frames for both test and training data
+  this is straightforward using cbind: 
 
-   `test_df <- cbind(test_subject_df, test_activity_df, test_measures)`
-   `train_df <- cbind(train_subject_df, train_activity_df, train_measures)`
+ `test_df <- cbind(test_subject_df, test_activity_df, test_measures)`
+ `train_df <- cbind(train_subject_df, train_activity_df, train_measures)`
 
-  (this is done as soon as possible to ensure that the data order doesn't change since the data isn't indexed)
+ doing this as soon as possible to ensure that the data order doesn't change since the data isn't indexed.
 
-
-**MERGE the TEST and TRAINING data** -- requirement 1
+**REQUIREMENT 1 -- MERGE the TEST and TRAINING data**
 
   this is straightforward using: 
+  
   `all_data <- rbind( test_df, train_df )`
 
 
-**Add READABLE activity labels** -- requirement 3
+**REQUIREMENT 3 -- Add READABLE activity labels**
 
   this is straightforward using merge to match the activity_labels against the activity_id:
 
   `all_data <- merge(activity_labels,all_data, by="activity_id", all=FALSE)`
 
 
-**CREATE a tidy summary data frame with just means and standard deviations for each observation** -- requirement 2
+**REQUIREMENT 2 -- CREATE a tidy summary data frame with just means and standard deviations for each observation**
 
   Identify the appropriate columns and use that to extract the correct data into a new summary data frame
 
 * extract the list of column names
+
   `all_data_names <- colnames(all_data)`
 
 * created a grep pattern to match mean, std, subject and activity (without the id)
+
   `pattern = "mean|std|subject_id|activity$"`
 
 * apply grepl and which to create a vector of the required column names
+
   `use_columns <- grepl( pattern, all_data_names, ignore.case=TRUE )`
+
   `report_columns = which( use_columns )`
 
 * generate the new summary data frame with the appropriate data:
+
   `all_means_n_stddevs <- all_data[ report_columns ]`
 
 * finally reorder the data so that:
   * first column is the control variarble (the subject)
   * second column is the recorded subject activity (in human readable format)
   * remaining columns is the recorded summary data from the smartphone
+
   `tidy_summary_means_n_stddevs <- all_means_n_stddevs[ c(2,1,3:length(report_columns) )]`
 
-**Write the summary data frame to a file** -- requirement 5
+**REQUIREMENT 5 -- Write the summary data frame to a file**
  
   done using:
+
   `write.table( tidy_summary_means_n_stddevs, file=tidy_data_path_file, row.name=FALSE, sep="," )`
 
   this creates a csv file, but gave it a TXT extension to ensure compatibility with the coursera website.
