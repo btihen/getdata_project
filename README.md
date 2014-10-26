@@ -83,7 +83,6 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
   
      `|`
 
-
      `-> tidydata`    _(top level for all tidy data)_
 
      `|  |`
@@ -102,10 +101,10 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
         `-> unzipped`  _(location for the unzipped raw data files)_
 
-* create the directory structures  
+* Create the directory structures  
 
-  **NOTE:** the code doesn't check to see if the folders are already created --
-  which creates a harmless warning if run multiple times).
+  _**NOTE:** the code doesn't check to see if the folders are already created --
+  which creates a harmless warning if the code is run multiple times._
 
 * download the raw data into the proper location
 * unzip the raw data into the proper location
