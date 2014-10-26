@@ -193,7 +193,7 @@ all_data <- all_data[ order( all_data$subject_id, all_data$activity_id ), ]
 
 #############################################################################
 #############################################################################
-## REQUIREMENT 2) create a data fram with  means and stdev for each measurement ##
+## REQUIREMENT 2) create a dataframe with means and stdev for each measurement ##
 #############################################################################
 #############################################################################
 all_data_names <- colnames(all_data)
