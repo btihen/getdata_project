@@ -26,7 +26,9 @@ This includes:
 
 * **subjects** -- a group of 30 volunteers within an age bracket of 19-48 years. **Its range is from 1 to 30.**
 * **activities** -- each subject performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) while wearing a smartphone on the waist.   The experiments have been video-recorded to label the observed activities manually. **Its range is from 1 to 6.**
-* **Calculted Values** - processed "features" from subjects were wearing a "Samsung Galaxy S II" on the waist.  The summary data contains only the calculated mean values and the associated standard deviations.  (An overview of the raw data and feature processing is presented below).
+* **Calculted Values** - processed "features" from subjects were wearing a "Samsung Galaxy S II" on the waist.  The summary data contains only the calculated mean values and the associated standard deviations.  (An overview of the raw data and feature processing is presented below). **Its range is from -1 to 1.** 
+
+**NOTE** -- I manually checked that all data was within bounds -- not with code.
 
 ## RAW DATA
 There are TWO basic type of measurements -- each measured along 3 axis (XYZ)
