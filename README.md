@@ -24,28 +24,44 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
 * open command line terminal
 * download this git repository -- type: 
+
   `git clone https://github.com/btihen/getdata_project.git`
+
 * move into the downloaded directory -- type:
+
   `cd getdata_project`
+
 * start R -- type:
+
   `r`
+
 * run the r code -- type:
+
   `source("run_analysis.R")`
+
   Ignore Warning messages: related to In dir.create(top_data_path) if you run this code more than once.
-* then you can view the summary data (in r) by typing:
+
+* View the summary data (in r) by typing:
+
   `tidy_summary_means_n_stddevs`
+
 * or you can leave r
+
   `quit()`
+
 * and view the resulting summary data in the file:
+
   `data/tidydata/har-tidydata-summary.txt`
+
   this is in a CSV format and uses a TXT extension to ensure compatibility with coursera's website (to upload this file)
+
 
 ## CODE LOGIC
 
 
 ## DATA EXPLAINED
 
-see the codebook: 
+see the codebook: (https://github.com/btihen/getdata_project/blob/master/codebook.md)
 
 
 
