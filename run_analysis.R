@@ -8,64 +8,84 @@
 #    4) Appropriately labels the data set with descriptive variable names. 
 #    5) From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-# download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip","data/har.zip",method="curl")
-
-##############################################
-## define the data location & download file ##
-##############################################
-work_path = "."
-data_path = "data"
-
-# human activity recognition (har)
-download_file = "har.zip"
-download_path = file.path(data_path, download_file)
-
-# assignment requires the use of the "Human Activity Recognition" data set
+#####################################
+#####################################
+## DEFINE THE DATA URL TO DOWNLOAD ##
+#####################################
+#####################################
+## assignment requires the use of the "Human Activity Recognition" data set
 url = "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download_date = as.Date(Sys.time())
 
-# create/prepare data location
-dir.create( file.path( work_path, data_path) )
+##################################################
+##################################################
+## create/prepare data directory and file names ##
+## for HUMAN ACTIVITY RECOGNITION data (HAR)    ##
+##################################################
+##################################################
+# define the data location & download file
+##########################################
+work_name = "."
+data_name = "data"
+raw_name  = "rawdata"
+tidy_name = "tidydata"
+unzipped_name = "unzipped"
+# define files names
+####################
+raw_zip_file    = "har-rawdata.zip"
+tidy_data_file  = "har-tidydata-summary.txt"
+raw_zip_path_file  = file.path( data_name, raw_name, raw_zip_file )
+tidy_data_path_file = file.path( data_name, tidy_name, tidy_data_file )
+# Create directory structures path names
+######################################## 
+top_data_path  = file.path( work_name, data_name )
+top_raw_path   = file.path( work_name, data_name, raw_name )
+top_tidy_path  = file.path( work_name, data_name, tidy_name )
+top_unzipped_path = file.path( work_name, data_name, raw_name, unzipped_name )
+# create the directory structures
+#################################
+dir.create( top_data_path )
+dir.create( top_raw_path )
+dir.create( top_tidy_path )
+dir.create( top_unzipped_path )
 
 # download data
-download.file( url, download_path, method="curl" )
+download.file( url, raw_zip_path_file, method="curl" )
 
 # unzip the data to the defined data location
-unzip( download_path, exdir=data_path, overwrite=TRUE )
+unzip( raw_zip_path_file, exdir=top_unzipped_path, overwrite=TRUE )
 
 ###################################
 ##  DETERMINE DATA SET PATH INFO ##
 ###################################
 # aquire data files and path info
-file_names = unzip( download_path, list=TRUE)$Name
+file_names = unzip( raw_zip_path_file, list=TRUE)$Name
 test_file  = file_names[1]
-
 # decide if data is unpacked into its own data structure & define dataset path
+###################################
 if ( grepl( "/", test_file ) ) {
-
   # learn project data structure (find top level) xxxxx/yyyyy
   first_file = strsplit( file_names[1],"/" ) 
-
   # the first value will have the folder the data unpacked into
-  project_path = first_file[[1]][1]
-  top_data_path = file.path( data_path, project_path )
+  unzipped_folder_name = first_file[[1]][1]
+  top_unzipped_rawdata_path = file.path( top_unzipped_path, unzipped_folder_name )
 } else { 
-  top_data_path = data_path
+  top_unzipped_rawdata_path = top_unzipped_path
 }
 # defind test and training data paths:
-test_data_path = file.path( top_data_path, "test" )
-train_data_path = file.path( top_data_path, "train" )
+test_data_path = file.path( top_unzipped_rawdata_path, "test" )
+train_data_path = file.path( top_unzipped_rawdata_path, "train" )
 
 ##################################
 ## DEFINE ALL FILE PATHS NEEDED ##
 ##################################
 # data definition files
-activity_file   = file.path( top_data_path, "activity_labels.txt" )
-measurements_file   = file.path( top_data_path, "features.txt" )
+activity_file         = file.path( top_unzipped_rawdata_path, "activity_labels.txt" )
+measurements_file     = file.path( top_unzipped_rawdata_path, "features.txt" )
 # test data 
-test_subjects_file   = file.path( test_data_path, "subject_test.txt" )
-test_measures_file   = file.path( test_data_path, "X_test.txt" )
-test_activities_file = file.path( test_data_path, "y_test.txt" )
+test_subjects_file    = file.path( test_data_path, "subject_test.txt" )
+test_measures_file    = file.path( test_data_path, "X_test.txt" )
+test_activities_file  = file.path( test_data_path, "y_test.txt" )
 # training data
 train_subjects_file   = file.path( train_data_path, "subject_train.txt" )
 train_measures_file   = file.path( train_data_path, "X_train.txt" )
@@ -97,12 +117,14 @@ train_measures   = read.table( train_measures_file, header=FALSE, strip.white=TR
 ## create a data set that follows the tidy data rules -- so that the data can be analyzed and understood
 ## A) one row for each observation
 ## B) data is clearly labeled & meaningful (thus usable)
-## C) remove improper data (out of range & possibly incomplete cases)
+## C) each table has only one kind of variable
+## D) with multiple tables, there should be a column that allows data linking
+## E) mark or remove improper data (invalid/out of range & possibly incomplete cases)
 #################################
 
 ######################################
 ######################################
-## ANSWER 4) label the data values ##
+## REQUIREMENT 4) label the data values ##
 ######################################
 ######################################
 # Add proper labels to data frame values
@@ -147,8 +169,10 @@ colnames(train_activity_df)[1] <- "activity_id"
 #########################################
 #########################################
 # combine subject and activity dfs
+# should I mark each test row with the the dataset = test
 test_df <- cbind(test_subject_df, test_activity_df, test_measures)
 # combine subject and activity dfs
+# should I mark each training row with the dataset = training
 train_df <- cbind(train_subject_df, train_activity_df, train_measures)
 # combine all rows into one big data frame
 all_data <- rbind( test_df, train_df )
@@ -156,35 +180,46 @@ all_data <- rbind( test_df, train_df )
 
 ######################################
 ######################################
-## ANSWER 3) human readble activity ##
+## REQUIREMENT 3) human readble activity ##
 ######################################
 ######################################
 # merge in activity labels (do not create every condition)
 all_data <- merge(activity_labels,all_data, by="activity_id", all=FALSE)
-
-####################
-## sort the data? ##
-####################
-# sort it into a nice order by: subject_id and then activity_id
+## merge messes up the sorting -- so resort grouped by:
+## control variable (the subject and then the observed activities) ##
+######################################################################
 all_data <- all_data[ order( all_data$subject_id, all_data$activity_id ), ]
 
-########################################################
-########################################################
-## ANSWER 2) get means and stdev for each measurement ##
-########################################################
-########################################################
+
+#############################################################################
+#############################################################################
+## REQUIREMENT 2) create a data fram with  means and stdev for each measurement ##
+#############################################################################
+#############################################################################
 all_data_names <- colnames(all_data)
-colnames(all_data_names)[1] <- "col_names"
+# create a patter to match the necessary summary data (means, stddev, subject and activity
+##########################################
 pattern = "mean|std|subject_id|activity$"
-all_data_names$keep <- grepl( pattern, all_data_names$col_names, ignore.case=TRUE )
-report_columns = which( all_data_names$keep )
-all_means_std <- all_data[ report_columns ]
+# match the pattern against all data columns using a logical grep
+############################################
+use_columns <- grepl( pattern, all_data_names, ignore.case=TRUE )
+# create a vector that will select the wanted columns
+######################################
+report_columns = which( use_columns )
+# Create a dataframe with just the summary data
+#################################################
+all_means_n_stddevs <- all_data[ report_columns ]
+###################
+# re-organize the dataframe into a standard format
+# first the subject (control variable first), 
+# second the observed_activity of the subject, 
+# third->end: recorded measurements summarys from the phone
+tidy_summary_means_n_stddevs <- all_means_n_stddevs[ c(2,1,3:length(report_columns) )]
+
 
 ##########################################
 ##########################################
-## ANSWER 5) Report data as a text file ##
+## REQUIREMENT 5) Report data as a text file ##
 ##########################################
 ##########################################
-#all_means_std <- all_means_std[ order(subject_id, activity) ]
-means_stddevs <- all_means_std[ c(2,1,3:length(report_columns) )]
-write.table( means_stddevs, file="all_means_stddev.txt", row.name=FALSE, sep="," )
+write.table( tidy_summary_means_n_stddevs, file=tidy_data_path_file, row.name=FALSE, sep="," )
