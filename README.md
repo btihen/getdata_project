@@ -59,28 +59,26 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
 ## CODE LOGIC
 
-**PREPARATION** 
-* define the data url
-* define the project file and directory structures
+**PROJECT STRUCTURE**
 
   `getdata_project`   _(seen in the code as `.`)_
-  
+
   `|`
-  
+
   `-> README.md`      _(the location of this file -- describing the project and the code)_
-  
-  `|` 
-  
+
+  `|`
+
   `-> codebook.md`    _(the location of the description of the data)_
-  
+
   `|`
-  
+
   `-> run_analysis.R` _(the location of the code being described in this section)_
-  
+
   `|`
-  
+
   `-> data`           _(top level for all data files)_
-  
+
      `|`
 
      `-> tidydata`    _(top level for all tidy data)_
@@ -101,6 +99,8 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 
         `-> unzipped`  _(location for the unzipped raw data files)_
 
+**PREPARATION** 
+* define the data url
 * Create the directory structures  
 
   _**NOTE:** the code doesn't check to see if the folders are already created --
@@ -115,15 +115,13 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 * read the activity_labels (key) -- so the activity observed can be read in human readable format 
   -- **activity_labels.txt**
 * read the data labels (the data doesn't have headers) -- **features.txt**
-* read the **TEST** data
-
-  **NOTE:** this file is not indexed -- the order is very important to match the subject_id, observed subject activity and associated phone measurements
-
+* read the **TEST** and **TRAINING** data -- they are the same, (except **test** is replaced with **train**)
   * read the subject_id's for the test data -- **test/subject_test.txt**
   * read the phone recorded measurements for the test data -- **test/X_test.txt** 
   * read the observed subject activities for the test data -- **test/y_test.txt**
 
-* read the **TRAINING** data -- the same as the test data (except **test** is replaced with **train**)
+  **NOTE:** these files are not indexed -- the order is very important in order to align the subject_id, observed subject activity and associated phone measurements
+
 
 **REQUIREMENT 4** -- ensure each variable is labeled in the final summary data frame
 

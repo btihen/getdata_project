@@ -165,7 +165,7 @@ colnames(train_activity_df)[1] <- "activity_id"
 
 #########################################
 #########################################
-## ANSWER: 1) join the TEST and TRAIN datasets ##
+## REQUIREMENT 1) join the TEST and TRAIN datasets ##
 #########################################
 #########################################
 # combine subject and activity dfs
