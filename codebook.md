@@ -32,8 +32,8 @@ This project's code: **run_analysis.R** -- produces the file **har-tidydata-summ
 ## RAW DOWNLOADE DATA DESCRIPTION
 
 There are TWO basic type of measurements -- each measured along 3 axis (XYZ)
-* **Acceleration (Acc)** - in units of gravity 'g' 
-* **Gryoscopic (Gryo)** -- in units of radians/sec
+* **Acceleration (Acc)** - in **units** of gravity 'g' 
+* **Gryoscopic (Gryo)** -- in **units** of radians/sec
 
 ## FEATURES (Calculated info) DESCRIPTION
 
@@ -42,7 +42,7 @@ There are many (561 features), however, there are serveral type of calcalations 
 **Three data types**
 * **time domain signals** -- _prefixed with 't'_ -- were captured at a constant rate of 50 Hz.
 * **fast-fourier-transforms (FFT)** -- _prefixed with 'f' to indicate frequency domain signals_
-* **angle** -- _prefixed with 'angle'_ (in radians)
+* **angle** -- _prefixed with 'angle'_ (**units** in radians)
 
 **Four Calculated features**
 * **Body** 
