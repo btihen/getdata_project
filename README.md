@@ -63,43 +63,43 @@ The data was collected by a smartphone (Samsung Galaxy S II) attached to the sub
 * define the data url
 * define the project file and directory structures
 
-  `getdata_project`   (seen in the code as `.`)
+  `getdata_project`   _(seen in the code as `.`)_
   
   `|`
   
-  `-> README.md`      (the location of this file -- describing the project and the code`
+  `-> README.md`      _(the location of this file -- describing the project and the code)_
   
   `|` 
   
-  `-> codebook.md`    (the location of the description of the data)
+  `-> codebook.md`    _(the location of the description of the data)_
   
   `|`
   
-  `-> run_analysis.R` (the location of the code being described in this section)
+  `-> run_analysis.R` _(the location of the code being described in this section)_
   
   `|`
   
-  `-> data`           (top level for all data files)
+  `-> data`           _(top level for all data files)_
   
      `|`
-     
-     `-> tidydata`    (top level for all tidy data)
-     
+
+     `-> tidydata`    _(top level for all tidy data)_
+
      `|  |`
-     
-     `|  -> har-tidydata-summary.txt  (location of required summary file)`
-     
+
+     `|  -> har-tidydata-summary.txt`  _(location of required summary file)_
+
      `|`
-     
-     `-> rawdata`     (top level for all raw data)
-     
+
+     `-> rawdata`     _(top level for all raw data)_
+
         `|` 
-        
-        `-> har-rawdata.zip` (location of the downloaded raw data file -- still in zipped format)
-        
+
+        `-> har-rawdata.zip` _(location of the downloaded raw data file -- still in zipped format)_
+
         `|` 
-        
-        `-> unzipped` (location for the unzipped raw data files)
+
+        `-> unzipped`  _(location for the unzipped raw data files)_
 
 * create the directory structures  
 
@@ -138,25 +138,28 @@ Doing this at the start for each data frame to make it hard to make mistakes -- 
   this is straightforward using cbind: 
 
  `test_df <- cbind(test_subject_df, test_activity_df, test_measures)`
+ 
  `train_df <- cbind(train_subject_df, train_activity_df, train_measures)`
 
  doing this as soon as possible to ensure that the data order doesn't change since the data isn't indexed.
 
-**REQUIREMENT 1 -- MERGE the TEST and TRAINING data**
+**REQUIREMENT 1** -- MERGE the TEST and TRAINING data
 
   this is straightforward using: 
   
   `all_data <- rbind( test_df, train_df )`
 
 
-**REQUIREMENT 3 -- Add READABLE activity labels**
+**REQUIREMENT 3** -- Add READABLE activity labels
 
   this is straightforward using merge to match the activity_labels against the activity_id:
 
   `all_data <- merge(activity_labels,all_data, by="activity_id", all=FALSE)`
+  
+  THIS MUST BE DONE AFTER MERGING the dataframes (subject, activity and measurements) as merge CHANGES the order of the data and without an index the data would be impossible to align after a merge.
 
 
-**REQUIREMENT 2 -- CREATE a tidy summary data frame with just means and standard deviations for each observation**
+**REQUIREMENT 2** -- CREATE a tidy summary data frame with just means and standard deviations for each observation
 
   Identify the appropriate columns and use that to extract the correct data into a new summary data frame
 
@@ -185,7 +188,7 @@ Doing this at the start for each data frame to make it hard to make mistakes -- 
 
   `tidy_summary_means_n_stddevs <- all_means_n_stddevs[ c(2,1,3:length(report_columns) )]`
 
-**REQUIREMENT 5 -- Write the summary data frame to a file**
+**REQUIREMENT 5**-- Write the summary data frame to a file
  
   done using:
 
